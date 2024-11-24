@@ -19,15 +19,27 @@ async function fetchData(){
 
         // creating a function that is going to update content based on whenever we click to the boutton of a page 
         function updateContent(e){
+            theArticleContainer.innerHTML=""
+            const paginationElement=document.querySelectorAll(".number");
+            paginationElement.forEach(element=>{
+                element.classList.remove("on");
+            })
             // we target the element using the e argument to point to the element directly
             const theTargetHTML=e.target;
             const theTarget=theTargetHTML.textContent;
-           indexOne=theTarget;
+            const currentElement=theTargetHTML;
+           indexOne=(theTarget-1)*5;
            indexTwo=theTarget*5;
-           theTargetHTML.classList.add('on');
+           currentElement.classList.add('on');
+           console.log(theTargetHTML);
+        
+           // calling the appendElementArticle() function which is a function containing the limited data from the api considering the api has 100 elements, we would like to display only a few.( 5 to be precise)
            appendElementArticle();
         }
+        // we call the appendElement for the default display
         appendElementArticle();
+
+        // creating the function appendElementArticle() in order to be able to reuse it up there
        function appendElementArticle(){
             const limitedPosts=data.slice(indexOne,indexTwo);
         limitedPosts.forEach(element => {
@@ -39,11 +51,13 @@ async function fetchData(){
             paragraph.textContent=element.body;
             post.appendChild(title);
             post.appendChild(paragraph);
-            theArticleContainer.appendChild(post)
+            theArticleContainer.appendChild(post);
             
         });
        }
+       // creating a logic to be able to calculate the number of page we would have considering the amount of data we have only to be able to show 5 elements at once.
         const totalPages=data.length/5;
+        // after determining the number of pages we will have, we populate them in an array using the logic below
         const arrayPages=[];
         for (i=1;i<totalPages;i++){
             arrayPages.push(i);
@@ -53,7 +67,9 @@ async function fetchData(){
             pageNumber.textContent=element;
             pageNumber.className="number"
             paginationContainer.appendChild(pageNumber);
+           
             pageNumber.addEventListener("click",updateContent);
+            
         });
         //console.log(arrayPages);
     }
@@ -63,5 +79,5 @@ async function fetchData(){
 
 
 }
+// calling the fecthData() Function which is an async function.
 fetchData();
-console.log("Tycoon");
