@@ -67,11 +67,15 @@ input::placeholder{
     display: flex;
     align-items: center;
     justify-content: space-between;
-    width: 100px;
+    width: 500px;
     margin: auto;
     cursor: pointer;
     font-size: 20px;
+
     color: rgb(94, 94, 94);  font-family: "Montserrat", sans-serif;
+}
+.number{
+   padding-left: 10px;
 }
 .on{
     background-color: white;
